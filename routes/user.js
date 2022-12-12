@@ -35,4 +35,15 @@ router.post('/:user_id/order/:store_id/:item_id', (req, res) => {
   );
 });
 
+// 주문 취소
+router.delete('/:user_id/order/:order_id', (req, res) => {
+  connection.query(
+    `DELETE FROM item WHERE order_id = '${req.params.order_id}';`,
+    (err) => {
+      if (err) throw err;
+      else res.status(200).json('주문 취소 완료');
+    }
+  );
+});
+
 module.exports = router;

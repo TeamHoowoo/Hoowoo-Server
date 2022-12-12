@@ -52,4 +52,19 @@ router.get('/:store_id/item/:item_id', (req, res) => {
   );
 });
 
+// 제품 수정(데이터 일부분만)
+router.put('/:store_id/item/:item_id', (req, res) => {
+  connection.query(
+    `UPDATE item SET name = '${req.body.name}', detail = '${
+      req.body.detail
+    }', delivery = ${
+      req.body.delivery ? Number(req.body.delivery) : null
+    }, pickup =${req.body.pickup} WHERE item_id = ${req.params.item_id};`,
+    (err) => {
+      if (err) throw err;
+      else res.status(200).json('제품 수정 완료');
+    }
+  );
+});
+
 module.exports = router;

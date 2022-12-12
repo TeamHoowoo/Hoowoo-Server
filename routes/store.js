@@ -78,4 +78,15 @@ router.delete('/:store_id/item/:item_id', (req, res) => {
   );
 });
 
+// 스토어 정보 반환
+router.get('/:store_id/myinfo', (req, res) => {
+  connection.query(
+    `SELECT * FROM store WHERE store_id = '${req.params.store_id}';`,
+    (err, data) => {
+      if (err) throw err;
+      else res.status(200).json(data);
+    }
+  );
+});
+
 module.exports = router;

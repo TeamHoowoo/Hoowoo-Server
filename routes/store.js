@@ -89,4 +89,15 @@ router.get('/:store_id/myinfo', (req, res) => {
   );
 });
 
+// 스토어 정보 수정
+router.put('/:store_id/myinfo', (req, res) => {
+  connection.query(
+    `UPDATE store SET password = password('${req.body.password}'), storeIntro = '${req.body.storeIntro}', pickupDate = '${req.body.pickupDate}';`,
+    (err) => {
+      if (err) throw err;
+      else res.status(200).json('스토어 정보 수정 완료');
+    }
+  );
+});
+
 module.exports = router;

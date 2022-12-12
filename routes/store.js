@@ -92,7 +92,7 @@ router.get('/:store_id/myinfo', (req, res) => {
 // 스토어 정보 수정
 router.put('/:store_id/myinfo', (req, res) => {
   connection.query(
-    `UPDATE store SET password = password('${req.body.password}'), storeIntro = '${req.body.storeIntro}', pickupDate = '${req.body.pickupDate}';`,
+    `UPDATE store SET password = password('${req.body.password}'), storeIntro = '${req.body.storeIntro}', pickupDate = '${req.body.pickupDate}' WHERE store_id = ${req.params.store_id};`,
     (err) => {
       if (err) throw err;
       else res.status(200).json('스토어 정보 수정 완료');
@@ -118,6 +118,17 @@ router.get('/:store_id/reservation', (req, res) => {
     (err, data) => {
       if (err) throw err;
       else res.status(200).json(data);
+    }
+  );
+});
+
+// 예약 상태 변경
+router.put('/:store_id/reservation/:order_id', (req, res) => {
+  connection.query(
+    `UPDATE order SET status = '${req.body.status}' WHERE order_id = ${req.params.order_id};`,
+    (err) => {
+      if (err) throw err;
+      else res.status(200).json('예약 상태 변경 완료');
     }
   );
 });

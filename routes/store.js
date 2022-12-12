@@ -100,4 +100,15 @@ router.put('/:store_id/myinfo', (req, res) => {
   );
 });
 
+// 스토어 삭제
+router.delete('/:store_id/myinfo', (req, res) => {
+  connection.query(
+    `DELETE FROM store WHERE store_id = '${req.params.store_id}';`,
+    (err) => {
+      if (err) throw err;
+      else res.status(200).json('스토어 삭제 완료');
+    }
+  );
+});
+
 module.exports = router;

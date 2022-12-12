@@ -67,4 +67,15 @@ router.put('/:store_id/item/:item_id', (req, res) => {
   );
 });
 
+// 제품 삭제
+router.delete('/:store_id/item/:item_id', (req, res) => {
+  connection.query(
+    `DELETE FROM item WHERE item_id = '${req.params.item_id}';`,
+    (err) => {
+      if (err) throw err;
+      else res.status(200).json('제품 삭제 완료');
+    }
+  );
+});
+
 module.exports = router;

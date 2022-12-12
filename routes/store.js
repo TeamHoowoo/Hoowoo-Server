@@ -26,4 +26,19 @@ router.get('/:store_id/item', (req, res) => {
   });
 });
 
+// 제품 등록(데이터 일부분만)
+router.post('/:store_id/new', (req, res) => {
+  connection.query(
+    `INSERT INTO item (name, detail, delivery, pickup, store_id) VALUES ('${
+      req.body.name
+    }', '${req.body.detail}', ${
+      req.body.delivery ? Number(req.body.delivery) : null
+    }, ${req.body.pickup}, ${req.params.store_id});`,
+    (err) => {
+      if (err) throw err;
+      else res.status(201).json('제품 등록 완료');
+    }
+  );
+});
+
 module.exports = router;

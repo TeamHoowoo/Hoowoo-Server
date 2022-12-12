@@ -17,7 +17,7 @@ app.use(express.static('public'));
 app.use(cors());
 
 app.use('/', router);
-app.use('/mystore', storeRouter);
+app.use('/', storeRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);

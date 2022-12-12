@@ -111,4 +111,15 @@ router.delete('/:store_id/myinfo', (req, res) => {
   );
 });
 
+// 모든 예약 목록 반환
+router.get('/:store_id/reservation', (req, res) => {
+  connection.query(
+    `SELECT * FROM \`order\` WHERE store_id = '${req.params.store_id}' ORDER BY regDate DESC;`,
+    (err, data) => {
+      if (err) throw err;
+      else res.status(200).json(data);
+    }
+  );
+});
+
 module.exports = router;

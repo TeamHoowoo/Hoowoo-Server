@@ -26,4 +26,15 @@ router.get('/:user_id/list', (req, res) => {
   );
 });
 
+// 장바구니 전체 삭제
+router.delete('/:user_id/list', (req, res) => {
+  connection.query(
+    `DELETE FROM cart WHERE user_id = '${req.params.user_id}';`,
+    (err, data) => {
+      if (err) throw err;
+      else res.status(200).json(data);
+    }
+  );
+});
+
 module.exports = router;

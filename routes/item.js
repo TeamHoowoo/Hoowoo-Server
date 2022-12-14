@@ -37,4 +37,15 @@ router.get('/store/:store_id', (req, res) => {
   });
 });
 
+// 제품 정보 반환
+router.get('/:item_id', (req, res) => {
+  connection.query(
+    `SELECT i.*, s.storeName, s.storeAddress, s.storeIntro, s.phone, s.pickupDate FROM item AS i JOIN store AS s ON i.store_id = s.store_id WHERE i.item_id = '${req.params.item_id}';`,
+    (err, data) => {
+      if (err) throw err;
+      else res.status(200).json(data);
+    }
+  );
+});
+
 module.exports = router;

@@ -15,19 +15,8 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-// 특정 스토어의 모든 제품 정보 반환
-router.get('/:store_id/item', (req, res) => {
-  const getItems = `SELECT * FROM item WHERE store_id = '${req.params.store_id}';`;
-  const getStore = `SELECT store_id, storeName, storeAddress, storeIntro, phone, pickupDate FROM store WHERE store_id = '${req.params.store_id}';`;
-
-  connection.query(getItems + getStore, (err, rows) => {
-    if (err) throw err;
-    else res.status(200).json({ items: rows[0], ...rows[1][0] });
-  });
-});
-
 // 제품 등록(데이터 일부분만)
-router.post('/:store_id/new', (req, res) => {
+router.post('/:store_id/item', (req, res) => {
   connection.query(
     `INSERT INTO item (name, detail, delivery, pickup, store_id) VALUES ('${
       req.body.name
@@ -37,17 +26,6 @@ router.post('/:store_id/new', (req, res) => {
     (err) => {
       if (err) throw err;
       else res.status(201).json('제품 등록 완료');
-    }
-  );
-});
-
-// 제품 정보 반환
-router.get('/:store_id/item/:item_id', (req, res) => {
-  connection.query(
-    `SELECT i.*, s.storeName, s.storeAddress, s.storeIntro, s.phone, s.pickupDate FROM item AS i JOIN store AS s ON i.store_id = s.store_id WHERE i.item_id = '${req.params.item_id}';`,
-    (err, data) => {
-      if (err) throw err;
-      else res.status(200).json(data);
     }
   );
 });
@@ -112,7 +90,7 @@ router.delete('/:store_id/myinfo', (req, res) => {
 });
 
 // 모든 예약 목록 반환
-router.get('/:store_id/reservation', (req, res) => {
+router.get('/:store_id/order', (req, res) => {
   connection.query(
     `SELECT * FROM \`order\` WHERE store_id = '${req.params.store_id}' ORDER BY regDate DESC;`,
     (err, data) => {
@@ -123,7 +101,7 @@ router.get('/:store_id/reservation', (req, res) => {
 });
 
 // 예약 상태 변경
-router.put('/:store_id/reservation/:order_id', (req, res) => {
+router.put('/:store_id/order/:order_id', (req, res) => {
   connection.query(
     `UPDATE order SET status = '${req.body.status}' WHERE order_id = ${req.params.order_id};`,
     (err) => {

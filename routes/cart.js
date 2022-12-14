@@ -66,4 +66,15 @@ router.get('/:cart_id', (req, res) => {
   );
 });
 
+// 장바구니 삭제
+router.delete('/:cart_id', (req, res) => {
+  connection.query(
+    `DELETE FROM cart WHERE cart_id = '${req.params.cart_id}';`,
+    (err) => {
+      if (err) throw err;
+      else res.status(200).json('장바구니 삭제 완료');
+    }
+  );
+});
+
 module.exports = router;

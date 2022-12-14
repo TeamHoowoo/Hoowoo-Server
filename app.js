@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 const router = require('./routes/index');
-const userRouter = require('./routes/user');
+const orderRouter = require('./routes/order');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +17,7 @@ app.use(express.static('public'));
 app.use(cors());
 
 app.use('/', router);
-app.use('/', userRouter);
+app.use('/', orderRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);

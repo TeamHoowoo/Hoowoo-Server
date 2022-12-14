@@ -15,19 +15,17 @@ const connection = mysql.createConnection({
 connection.connect();
 
 // 주문 하기
-router.post('/:user_id/order/:store_id/:item_id', (req, res) => {
+router.post('/order', (req, res) => {
   const o = req.body;
   connection.query(
-    `INSERT INTO order (regDate, count, receipt, letteringColor, creamColor, flavor, size, price, totalPrice, lettering, status, name, phone, address, user_id, store_id, item_id)
-    VALUES (${o.regDate}, ${Number(o.count)},'${o.receipt}', '${
+    `INSERT INTO order (regDate, count, receipt, date letteringColor, creamColor, flavor, size, price, totalPrice, lettering, status, name, phone, address, user_id, store_id, item_id)
+    VALUES (${o.regDate}, ${Number(o.count)},'${o.receipt}', ${o.date}, '${
       o.letteringColor
     }', '${o.creamColor}', '${o.flavor}', '${o.size}', ${Number(
       o.price
     )}, ${Number(o.totalPrice)}, '${o.lettering}', '대기', '${o.name}', '${
       o.phone
-    }', '${o.address}', ${req.params.user_id}, ${req.params.store_id}, ${
-      req.params.item_id
-    });`,
+    }', '${o.address}', ${o.user_id}, ${o.store_id}, ${o.item_id});`,
     (err) => {
       if (err) throw err;
       else res.status(201).json('주문 완료');
@@ -36,7 +34,7 @@ router.post('/:user_id/order/:store_id/:item_id', (req, res) => {
 });
 
 // 주문 취소
-router.delete('/:user_id/order/:order_id', (req, res) => {
+router.delete('/order/:order_id', (req, res) => {
   connection.query(
     `DELETE FROM item WHERE order_id = '${req.params.order_id}';`,
     (err) => {

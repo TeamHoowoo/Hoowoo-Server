@@ -55,4 +55,15 @@ router.post('/', (req, res) => {
   );
 });
 
+// 장바구니 정보 반환
+router.get('/:cart_id', (req, res) => {
+  connection.query(
+    `SELECT * FROM cart WHERE cart_id = '${req.params.cart_id}';`,
+    (err, data) => {
+      if (err) throw err;
+      else res.status(200).json(data);
+    }
+  );
+});
+
 module.exports = router;

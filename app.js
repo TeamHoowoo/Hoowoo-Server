@@ -8,6 +8,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 const router = require('./routes/index');
+const itemRouter = require('./routes/item');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -16,6 +17,7 @@ app.use(express.static('public'));
 app.use(cors());
 
 app.use('/', router);
+app.use('/item', itemRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);

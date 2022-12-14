@@ -26,4 +26,15 @@ router.get('/', (req, res) => {
   );
 });
 
+// 스토어의 모든 제품 목록 반환
+router.get('/store/:store_id', (req, res) => {
+  const getItems = `SELECT * FROM item WHERE store_id = '${req.params.store_id}';`;
+  const getStore = `SELECT store_id, storeName, storeAddress, storeIntro, phone, pickupDate FROM store WHERE store_id = '${req.params.store_id}';`;
+
+  connection.query(getItems + getStore, (err, rows) => {
+    if (err) throw err;
+    else res.status(200).json({ items: rows[0], ...rows[1][0] });
+  });
+});
+
 module.exports = router;

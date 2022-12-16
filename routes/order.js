@@ -18,16 +18,16 @@ connection.connect();
 router.post('/order', (req, res) => {
   const o = req.body;
   connection.query(
-    `INSERT INTO order (regDate, count, receipt, date, letteringColor, creamColor, flavor, size, price, totalPrice, lettering, status, name, phone, address, user_id, store_id, item_id)
-    VALUES (${o.regDate}, ${Number(o.count)},'${o.receipt}', ${o.date}, '${
-      o.letteringColor
-    }', '${o.creamColor}', '${o.flavor}', '${o.size}', ${Number(
-      o.price
-    )}, ${Number(o.totalPrice)}, '${o.lettering}', '대기', '${o.name}', '${
-      o.phone
-    }', '${o.address}', ${Number(o.user_id)}, ${Number(o.store_id)}, ${Number(
-      o.item_id
-    )});`,
+    `INSERT INTO order (regDate, itemName, count, receipt, date, letteringColor, creamColor, flavor, size, price, totalPrice, lettering, status, name, phone, address, user_id, store_id, item_id)
+    VALUES (now(), '${o.itemName}', ${Number(o.count)},'${o.receipt}', ${
+      o.date
+    }, '${o.letteringColor}', '${o.creamColor}', '${o.flavor}', '${
+      o.size
+    }', ${Number(o.price)}, ${Number(o.totalPrice)}, '${
+      o.lettering
+    }', '대기', '${o.name}', '${o.phone}', '${o.address}', ${Number(
+      o.user_id
+    )}, ${Number(o.store_id)}, ${Number(o.item_id)});`,
     (err) => {
       if (err) throw err;
       else res.status(201).json('주문 완료');

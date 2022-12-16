@@ -100,6 +100,17 @@ router.get('/:store_id/order', (req, res) => {
   );
 });
 
+// 예약 정보 반환
+router.get('/:store_id/order/:order_id', (req, res) => {
+  connection.query(
+    `SELECT * FROM \`order\` WHERE order_id = '${req.params.order_id}';`,
+    (err, data) => {
+      if (err) throw err;
+      else res.status(200).json(data);
+    }
+  );
+});
+
 // 예약 상태 변경
 router.put('/:store_id/order/:order_id', (req, res) => {
   connection.query(

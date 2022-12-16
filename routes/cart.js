@@ -41,13 +41,15 @@ router.delete('/:user_id/list', (req, res) => {
 router.post('/', (req, res) => {
   const c = req.body;
   connection.query(
-    `INSERT INTO cart (count, receipt, date, letteringColor, creamColor, flavor, size, price, totalPrice, lettering, user_id, store_id, item_id) VALUES (${Number(
-      c.count
-    )},'${c.receipt}', ${c.date}, '${c.letteringColor}', '${c.creamColor}', '${
-      c.flavor
-    }', '${c.size}', ${Number(c.price)}, ${Number(c.totalPrice)}, '${
-      c.lettering
-    }', ${Number(c.user_id)}, ${Number(c.store_id)}, ${Number(c.item_id)});`,
+    `INSERT INTO cart (itemName, count, receipt, date, letteringColor, creamColor, flavor, size, price, totalPrice, lettering, user_id, store_id, item_id) VALUES ('${
+      c.itemName
+    }', ${Number(c.count)},'${c.receipt}', ${c.date}, '${c.letteringColor}', '${
+      c.creamColor
+    }', '${c.flavor}', '${c.size}', ${Number(c.price)}, ${Number(
+      c.totalPrice
+    )}, '${c.lettering}', ${Number(c.user_id)}, ${Number(c.store_id)}, ${Number(
+      c.item_id
+    )});`,
     (err) => {
       if (err) throw err;
       else res.status(201).json('장바구니 담기 완료');

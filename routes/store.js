@@ -111,4 +111,17 @@ router.put('/:store_id/order/:order_id', (req, res) => {
   );
 });
 
+// 모든 일정 반환
+router.get('/:store_id/schedule', (req, res) => {
+  connection.query(
+    `SELECT order_id, itemName AS title, DATE_ADD(date, INTERVAL 9 HOUR) AS date FROM \`order\` WHERE store_id = '${req.params.store_id}' AND status = '예약 확정';`,
+    (err, data) => {
+      if (err) throw err;
+      else {
+        res.status(200).json(data);
+      }
+    }
+  );
+});
+
 module.exports = router;
